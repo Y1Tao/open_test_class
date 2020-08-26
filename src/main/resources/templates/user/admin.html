@@ -1,18 +1,32 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
 </head>
 <body>
 <p>This is a admin page.</p>
-<p>Id: <th:block sec:authentication="principal.id"></th:block></p>
-<p>Username: <th:block sec:authentication="principal.username"></th:block></p>
-<p>Role: <th:block sec:authentication="principal.authorities"></th:block></p>
+<p>Id: <th:block th:text="${user.getId()}"></th:block></p>
+<p>Username: <th:block th:text="${user.getUsername()}"></th:block></p>
+<p>Role: <th:block th:text="${user.getAuthorities()}"></th:block></p>
+
+<a th:href="@{/user/registPage/}">新增</a>
+<table border="1">
+    <tr>
+        <th>序号</th>
+        <th>用户名</th>
+        <th>角色</th>
+        <th>操作</th>
+    </tr>
+    <tr  th:each="info,infoStat : ${userList}" >
+        <th th:text="${infoStat.count}"></th>
+        <td th:text="${info.username}"></td>
+        <td th:text="${info.role}"></td>
+        <td><a th:href="@{/user/findUserById/}+${info.id}">编辑</a><a th:href="@{/user/removeUserById(id=${info.id})}">删除</a></td>
+    </tr>
+</table>
+
 <a th:href="@{/logout}">Logout</a><br/>
 <a th:href="@{/user/home}">Home</a><br/>
-<a th:href="@{/user/editor}">Editor</a><br/>
-<a th:href="@{/user/reviewer}">Reviewer</a><br/>
-<a th:href="@{/user/admin}">Admin</a><br/>
 </body>
 </html>

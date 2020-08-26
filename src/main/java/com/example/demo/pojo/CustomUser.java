@@ -7,18 +7,20 @@ import java.util.Collection;
 
 public class CustomUser extends User {
 
-    private int id;
+    private Long id;
 
-    public CustomUser(int id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public CustomUser(Long id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
         this.id = id;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
+
+
 }

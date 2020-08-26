@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
                 .loginPage("/login") // 自定义用户登入页面
+                .defaultSuccessUrl("/user/home")
                 .failureUrl("/login?error") // 自定义登入失败页面，前端可以通过url中是否有error来提供友好的用户登入提示
                 .and()
                 .logout()
@@ -75,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private TokenBasedRememberMeServices getRememberMeServices() {
         TokenBasedRememberMeServices services = new TokenBasedRememberMeServices(SECRET_KEY, userDetailsServiceImpl);
         services.setCookieName("remember-cookie");
-        services.setTokenValiditySeconds(100); // 默认14天
+//        services.setTokenValiditySeconds(100); // 默认14天
         return services;
     }
 }

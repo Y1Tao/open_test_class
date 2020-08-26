@@ -5,43 +5,63 @@ import com.example.demo.pojo.User;
 import com.example.demo.security.IsAdmin;
 import com.example.demo.security.IsEditor;
 import com.example.demo.security.IsReviewer;
+import com.example.demo.security.IsUser;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Map;
+import java.util.List;
 
-@RestController
+@IsUser // 表明该控制器下所有请求都需要登入后才能访问
+@Controller
 @RequestMapping("/user")
-public class LoginController {
+public class UserController {
 
     @Autowired
     private UserService userService;
 
-//    @RequestMapping()
-//    public String login(){
-//String username="";
-//        userService.findByUsername(username);
-//        return null;
-//    }
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @GetMapping("/registPage")
+    @IsAdmin
+    public String registPage() {
+        return "user/register";
+    }
+
     @PostMapping("/register")
-    public String registerUser(@RequestBody Map<String,String> registerUser){
-        User user = new User();
-        user.setUsername(registerUser.get("username"));
+    @IsAdmin
+    public String registerUser(User user){
         // 记得注册的时候把密码加密一下
-        user.setPassword(passwordEncoder.encode(registerUser.get("password")));
-        user.setRole(registerUser.get("role"));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User save = userService.create(user);
-        return save.toString();
+        return "redirect:/user/admin";
+    }
+
+    @GetMapping("/findUserById/{id}")
+    @IsAdmin
+    public String findUserById(@PathVariable("id") int id, Model model){
+        User user = userService.findUserById(id);
+        model.addAttribute("user",user);
+        return "user/edit";
+    }
+
+    /**
+     * 更新账户
+     * @param user
+     * @return
+     */
+    @PutMapping("/updateUser")
+    @IsAdmin
+    public String updateUser(User user) {
+        userService.updateUser(user);
+        return "redirect:/user/admin";
     }
 
     @GetMapping("/home")
@@ -72,8 +92,14 @@ public class LoginController {
 
     @GetMapping("/admin")
     @IsAdmin
-    public String admin() {
-        // 方法四：通过Thymeleaf的Security标签进行，详情见admin.html
+    public String admin(Model model) {
+        //获取用户信息
+        List<User> userList = userService.findAll();
+
+        CustomUser user = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", user);
+        model.addAttribute("userList", userList);
+
         return "user/admin";
     }
 }
