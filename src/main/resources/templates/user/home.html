@@ -5,14 +5,14 @@
     <title>Home</title>
 </head>
 <body>
-<p>This is a home page.</p>
-<p>Id: <th:block th:text="${user.getId()}"></th:block></p>
+<p>主页</p>
+<!--<p>Id: <th:block th:text="${user.getId()}"></th:block></p>-->
 <p>Username: <th:block th:text="${user.getUsername()}"></th:block></p>
 <p>Role: <th:block th:text="${user.getAuthorities()}"></th:block></p>
-<a th:href="@{/logout}">Logout</a><br/>
-<a th:href="@{/user/home}">Home</a><br/>
-<a th:href="@{/user/editor}">Editor</a><br/>
-<a th:href="@{/user/reviewer}">Reviewer</a><br/>
-<a th:href="@{/user/admin}">Admin</a><br/>
+<a th:href="@{/logout}">登出</a><br/>
+<a th:href="@{/user/home}">主页</a><br/>
+<a th:href="@{/course/index}">课程管理</a><br/>
+<a th:href="@{/subscribe/index}">订阅管理</a><br/>
+<a th:href="@{/user/admin}">账户管理</a><br/>
 </body>
 </html>

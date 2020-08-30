@@ -4,6 +4,7 @@ import com.example.demo.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -65,9 +66,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  * 默认允许所有路径所有人都可以访问，确保静态资源的正常访问。
                  * 后面再通过方法注解的方式来控制权限。
                  */
-                .authorizeRequests().anyRequest().permitAll()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/h2/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/h2/**").permitAll()
+                .anyRequest().permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/403"); // 权限不足自动跳转403
+
+        http.csrf().ignoringAntMatchers("/h2/**");
+        http.headers().frameOptions().sameOrigin();
     }
 
     /**

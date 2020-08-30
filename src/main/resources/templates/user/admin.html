@@ -5,10 +5,12 @@
     <title>Admin</title>
 </head>
 <body>
-<p>This is a admin page.</p>
-<p>Id: <th:block th:text="${user.getId()}"></th:block></p>
+<p>账户管理</p>
+<!--<p>Id: <th:block th:text="${user.getId()}"></th:block></p>
 <p>Username: <th:block th:text="${user.getUsername()}"></th:block></p>
-<p>Role: <th:block th:text="${user.getAuthorities()}"></th:block></p>
+<p>Role: <th:block th:text="${user.getAuthorities()}"></th:block></p>-->
+<a th:href="@{/logout}">登出</a><br/>
+<a th:href="@{/user/home}">主页</a><br/>
 
 <a th:href="@{/user/registPage/}">新增</a>
 <table border="1">
@@ -26,7 +28,5 @@
     </tr>
 </table>
 
-<a th:href="@{/logout}">Logout</a><br/>
-<a th:href="@{/user/home}">Home</a><br/>
 </body>
 </html>

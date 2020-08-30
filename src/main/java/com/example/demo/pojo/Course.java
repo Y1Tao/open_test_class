@@ -6,20 +6,19 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-//用户
 @Entity
-@Table(name="T_USER")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Course {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
+    private String name;
 
-    private String password;
+    @Transient
+    private int subscription;
 
-    private String role;
 }
