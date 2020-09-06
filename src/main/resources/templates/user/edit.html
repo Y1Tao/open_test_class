@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Editor</title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 <p>账户更新</p>
@@ -13,9 +16,21 @@
 
     <form action="/user/updateUser" method="post">
         <input type="hidden" name="_method" th:value="PUT">
-        用户名: <input name="username" th:value="${user.username}"/> <br/>
-        密码: <input name="password" th:value="${user.password}" type="password"/> <br/>
-        角色: <input name="role" th:value="${user.role}"/> <br/>
+        <div class="form-group">
+            <label for="username">用户名</label>
+            <input type="text" class="form-control" id="username"
+                   name="username" th:value="${user.username}">
+        </div>
+        <div class="form-group">
+            <label for="password">密码</label>
+            <input type="text" class="form-control" id="password"
+                   name="password" th:value="${user.password}">
+        </div>
+        <div class="form-group">
+            <label for="role">角色</label>
+            <input type="text" class="form-control" id="role"
+                   name="role" th:value="${user.role}">
+        </div>
         <input type="hidden" name="id" th:value="${user.id}"/>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         <button type="submit">提交</button>
