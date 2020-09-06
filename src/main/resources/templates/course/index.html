@@ -9,8 +9,8 @@
 <a th:href="@{/logout}">登出</a><br/>
 <a th:href="@{/user/home}">主页</a><br/>
 
-<a th:href="@{/course/createPage/}">新增</a>
-<table border="1">
+<a class="btn btn-success" th:href="@{/course/createPage/}">新增</a>
+<table class="table table-bordered">
     <tr>
         <th>序号</th>
         <th>课程名</th>
@@ -21,7 +21,7 @@
         <th th:text="${infoStat.count}"></th>
         <td th:text="${info.name}"></td>
         <td th:text="${info.subscription}"></td>
-        <td><a th:href="@{/course/findCourseById/}+${info.id}">编辑</a><a th:href="@{/course/removeCourseById(id=${info.id})}">删除</a></td>
+        <td><a class="btn btn-success" th:href="@{/course/findCourseById/}+${info.id}">编辑</a><a class="btn btn-danger" th:href="@{/course/removeCourseById(id=${info.id})}">删除</a></td>
     </tr>
 </table>
 
